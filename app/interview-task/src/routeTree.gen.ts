@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as publicLayoutRouteImport } from './routes/(public)/_layout'
 import { Route as protectedLayoutRouteImport } from './routes/(protected)/_layout'
 import { Route as publicLayoutLoginRouteImport } from './routes/(public)/_layout/login'
+import { Route as protectedLayoutServiceLayoutRouteImport } from './routes/(protected)/_layout/service/_layout'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -32,38 +33,48 @@ const publicLayoutLoginRoute = publicLayoutLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => publicLayoutRoute,
 } as any)
+const protectedLayoutServiceLayoutRoute =
+  protectedLayoutServiceLayoutRouteImport.update({
+    id: '/service/_layout',
+    path: '/service',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof publicLayoutLoginRoute
+  '/service': typeof protectedLayoutServiceLayoutRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof publicLayoutLoginRoute
+  '/service': typeof protectedLayoutServiceLayoutRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/(protected)/_layout': typeof protectedLayoutRoute
+  '/(protected)/_layout': typeof protectedLayoutRouteWithChildren
   '/(public)/_layout': typeof publicLayoutRouteWithChildren
   '/(public)/_layout/login': typeof publicLayoutLoginRoute
+  '/(protected)/_layout/service/_layout': typeof protectedLayoutServiceLayoutRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths: '/' | '/login' | '/service'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
+  to: '/' | '/login' | '/service'
   id:
     | '__root__'
     | '/'
     | '/(protected)/_layout'
     | '/(public)/_layout'
     | '/(public)/_layout/login'
+    | '/(protected)/_layout/service/_layout'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  protectedLayoutRoute: typeof protectedLayoutRoute
+  protectedLayoutRoute: typeof protectedLayoutRouteWithChildren
   publicLayoutRoute: typeof publicLayoutRouteWithChildren
 }
 
@@ -97,8 +108,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicLayoutLoginRouteImport
       parentRoute: typeof publicLayoutRoute
     }
+    '/(protected)/_layout/service/_layout': {
+      id: '/(protected)/_layout/service/_layout'
+      path: '/service'
+      fullPath: '/service'
+      preLoaderRoute: typeof protectedLayoutServiceLayoutRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
   }
 }
+
+interface protectedLayoutRouteChildren {
+  protectedLayoutServiceLayoutRoute: typeof protectedLayoutServiceLayoutRoute
+}
+
+const protectedLayoutRouteChildren: protectedLayoutRouteChildren = {
+  protectedLayoutServiceLayoutRoute: protectedLayoutServiceLayoutRoute,
+}
+
+const protectedLayoutRouteWithChildren = protectedLayoutRoute._addFileChildren(
+  protectedLayoutRouteChildren,
+)
 
 interface publicLayoutRouteChildren {
   publicLayoutLoginRoute: typeof publicLayoutLoginRoute
@@ -114,7 +144,7 @@ const publicLayoutRouteWithChildren = publicLayoutRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  protectedLayoutRoute: protectedLayoutRoute,
+  protectedLayoutRoute: protectedLayoutRouteWithChildren,
   publicLayoutRoute: publicLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
