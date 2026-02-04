@@ -1,14 +1,14 @@
 import { useForm } from '@tanstack/react-form'
 import { useGetServicOptions } from '../hooks/useServiceTypes.query';
 import { useCreateServiceRequest } from '../hooks/useCreateServiceRequests.mutation';
-import { ServicesTable } from './service,tabble';
+import { Link } from '@tanstack/react-router';
 
 
 // Todo: add validation here 
 export default function ServiceCreateForm() {
   // i am using any to types to save time
 
-  const {mutate, isPending, isError, error, data: mutationData} = useCreateServiceRequest()
+  const {mutate, isPending, isError, error, data: mutationData, mutateAsync,} = useCreateServiceRequest()
 
   const { data, isFetching } : any= useGetServicOptions()
 
@@ -64,19 +64,26 @@ if (isFetching && !data) {
  console.log(mutationData?.response,'mutationData');
  
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-4 bg-white">
-      <div className="w-full max-w-sm space-y-6">
+    <div className="w-[60vw] m-auto px-4 bg-[lightgrey] ">
+      <div className='flex flex-row justify-between'>
+      <h4>Add Service Request form</h4>
+      <Link className='bg-[teal] text-white p-2' to="/service">go back</Link>
+      </div>
+      <div className=" space-y-6 flex flex-col w-full py-6">
 
         <form onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
-        }}>
+        }}
+          className='flex flex-col gap-2'
+        >
           <form.Field
             name="title"
             children={(field) =>
               <>
+              <label>Title</label>
                 <input
-                  className='bg-white text-3xl font-bold underline'
+                  className='bg-[lightgrey] text-black p-2'
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder='Enter title'
@@ -88,8 +95,9 @@ if (isFetching && !data) {
             name="description"
             children={(field) =>
               <>
+              <label>Description</label>
                 <input
-                  className=''
+                  className='bg-[lightgrey] text-black p-2'
                   type='text'
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -101,8 +109,11 @@ if (isFetching && !data) {
           <form.Field
             name="category"
             children={(field) =>
+              <>
+              <label>Category</label>
              <select
                   name={field.name}
+                  className='bg-[lightgrey] text-black p-2'
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                 >
@@ -113,13 +124,17 @@ if (isFetching && !data) {
                     ))
                   }
                 </select>
+                      </>
             }
           />
           <form.Field
             name="priority"
             children={(field) =>
+              <>
+              <label htmlFor="priority-select">Priority </label>
              <select
                   name={field.name}
+                  className='bg-[lightgrey] text-black p-2'
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                 >
@@ -130,6 +145,7 @@ if (isFetching && !data) {
                     ))
                   }
                 </select>
+                  </>
             }
           />
           <form.Field
@@ -138,6 +154,7 @@ if (isFetching && !data) {
               <>
                 <select
                   name={field.name}
+                  className='bg-[lightgrey] text-black p-2'
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                 >
@@ -159,7 +176,7 @@ if (isFetching && !data) {
               return (
                 <button
                   type="submit"
-                  className="w-full"
+                  className="w-full bg-[teal] text-white p-3 mt-4"
                   disabled={!canSubmit}
                 >
                   submit
@@ -169,7 +186,6 @@ if (isFetching && !data) {
           />
         </form>
       </div>
-      <ServicesTable />
     </div>
   )
 }

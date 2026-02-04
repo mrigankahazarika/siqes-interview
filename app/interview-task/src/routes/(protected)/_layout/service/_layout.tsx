@@ -1,10 +1,10 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import ServiceCreateForm from '../../../../features/service-requests/view/service-create.form'
+import { ServicesTable } from '../../../../features/service-requests/view/service,tabble'
 
 export const Route = createFileRoute('/(protected)/_layout/service/_layout')({
-  component: ServiceCreateForm,
+  component: ServicesTable,
 })
 
 function RouteComponent() {
-  return <div>Hello "/(protected)/_layout/service/_layout"! <Outlet /></div>
+  return <div><Outlet /></div>
 }

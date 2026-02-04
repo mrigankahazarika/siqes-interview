@@ -1,6 +1,5 @@
 import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-router'
-import { Dashboard } from '../../features/dashboard/view'
-import { DashboardLayout } from '../../layouts/dahsboard.layout'
+import { Sidebar } from '../../components/global/sidebar';
 
 // const user = {
 //   id : 1
@@ -38,7 +37,9 @@ export const Route = createFileRoute('/(protected)/_layout')({
 
 function RouteComponent() {
   return <div>
-    <DashboardLayout/>
-    <Outlet />
+    <div className="flex  flex-row h-[100vh] p-1">
+      <Sidebar />
+      <Outlet />
+    </div>
   </div>
 }

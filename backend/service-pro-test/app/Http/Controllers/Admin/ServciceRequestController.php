@@ -19,7 +19,7 @@ class ServciceRequestController extends Controller
         $limit = $request->limit;
 
         // $requests = ServciceRequestModel::paginate($page || 1, $limit || 15);
-        $requests = ServciceRequestModel::paginate();
+        $requests = ServciceRequestModel::paginate($limit, ['*'], $page );
 
         return response()->json($requests);
     }

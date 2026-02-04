@@ -13,9 +13,12 @@ export const useCreateServiceRequest = ()=> {
         mutationFn : (data : any) => create(data),
         onSuccess : (data: any)=> {
             if (data.status=== 422) {
-                return data
+                return data;
             }
-            console.log(data.response,' mutation of services');
+            // console.log(data,' mutation of services');
+            if (data.data) {
+                alert('Service created')                
+            }
         },
         onError : (data : any)=> {
             console.log(data, 'error data mutation');

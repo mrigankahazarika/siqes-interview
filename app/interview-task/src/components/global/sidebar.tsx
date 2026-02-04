@@ -13,7 +13,7 @@ const navigation: INavBar[] = [
         id: 1,
         name: 'Dashboard',
         icon: '',
-        link: '/'
+        link: '/dashboard'
     },
     {
         id: 2,
@@ -27,7 +27,7 @@ const navigation: INavBar[] = [
 export const Sidebar = () => {
     return (
         <>
-        <div className="flex flex-col  gap-2">
+        <div className="flex flex-col bg-[teal] p-4  w-[10vw] gap-2">
             {
                 navigation.map((item,index) => (
                     <Link

@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 
 // set any for all types to save time
 
-const getServicesRequests : any = (page : string, limit: string)=> {
+const getServicesRequests : any = (page : number , limit: number)=> {
     return {
         queryKey : ['serviceRequests'],
-        queryFn : ()=> fetch(1, 10)
+        queryFn : ()=> fetch(page, limit)
     }
 }
 
-export const useGetServicrequests = ()=> {
-        return  useQuery(getServicesRequests())
+export const useGetServicrequests = (page : number , limit : string)=> {
+        return  useQuery(getServicesRequests(page , limit))
 }

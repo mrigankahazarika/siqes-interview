@@ -1,7 +1,9 @@
+import id from "zod/v4/locales/id.js";
 import apiClient from "./api.client"
 
 interface DataStore {
     name : string
+    id : string
 }
 
 interface IPagination {
@@ -20,11 +22,22 @@ export const create = async (payload : DataStore) => {
     }
 }
 
-export const fetch = async (params : IPagination) => {
+
+// for list fetch
+export const fetch = async (page : number , limit : number) => {
     // const res = await apiClient.get(`service_request?${params}`, )
-    const res = await apiClient.get(`service_request`, )
+    const res = await apiClient.get(`service_request?page=${page}&limit=${limit}`, )
     return res.data;
 }
+
+// for list fetchDetails
+export const single = async (id : string) => {
+    // const res = await apiClient.get(`service_request?${params}`, )
+    const res = await apiClient.get(`service_request/${id}`, )
+    return res.data;
+}
+
+
 
 export const fetchServiceTypes = async () => {
     const res = await apiClient.get(`service_request/types`)
