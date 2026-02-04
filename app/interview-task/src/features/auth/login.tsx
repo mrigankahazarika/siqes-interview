@@ -22,10 +22,12 @@ export default function LoginPage() {
   })
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-4">
-      <div className="w-full max-w-sm space-y-6">
+    <div className="flex min-h-[100dvh] items-center justify-center px-4 bg-[teal]">
+      <div className="w-full max-w-sm space-y-6 p-5 bg-white min-h-[30vh]">
 
-        <form onSubmit={(e) => {
+        <form 
+          className='flex flex-col gap-5'
+        onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();
         }}>
@@ -33,8 +35,9 @@ export default function LoginPage() {
             name="email"
             children={(field) =>
               <>
+              <label htmlFor="">Enter Your Email</label>
                 <input
-                  className=''
+                  className='border-[#000] rounded-lg border-[1px] w-full p-3'
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder='Enter Email'
@@ -46,8 +49,9 @@ export default function LoginPage() {
             name="password"
             children={(field) =>
               <>
+              <label htmlFor="">Enter Your Password</label>
                 <input
-                  className=''
+                  className='border-[#000] rounded-lg border-[1px] w-full p-3'
                   type='password'
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -64,7 +68,7 @@ export default function LoginPage() {
               return (
                 <button
                   type="submit"
-                  className="w-full"
+                  className="w-full bg-[teal] p-5 text-white text-xl"
                   disabled={!canSubmit}
                 >
                   submit

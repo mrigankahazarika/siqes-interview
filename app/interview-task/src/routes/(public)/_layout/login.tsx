@@ -7,6 +7,7 @@ export const Route = createFileRoute('/(public)/_layout/login')({
 
 function RouteComponent() {
   return <div>
+    login
     <LoginPage />
   </div>
 }
