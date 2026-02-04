@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import ServiceUpdateForm from '../../../../../../features/service-requests/view/service-update.form'
 
 export const Route = createFileRoute(
   '/(protected)/_layout/service/_layout/$serviceId/',
@@ -7,5 +8,8 @@ export const Route = createFileRoute(
 })
 
 function RouteComponent() {
-  return <div>Hello "/(protected)/_layout/service/_layout/$serviceId/"!</div>
+  return <div><ServiceUpdateForm /></div>
 }
+
+// This route is kept for backward compatibility
+// Primary edit route is at /(protected)/_layout/service/edit/$serviceId

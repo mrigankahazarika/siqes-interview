@@ -16,6 +16,7 @@ import { Route as publicLayoutLoginRouteImport } from './routes/(public)/_layout
 import { Route as protectedLayoutServiceCreateRouteImport } from './routes/(protected)/_layout/service/create'
 import { Route as protectedLayoutServiceLayoutRouteImport } from './routes/(protected)/_layout/service/_layout'
 import { Route as protectedLayoutDashboardLayoutRouteImport } from './routes/(protected)/_layout/dashboard/_layout'
+import { Route as protectedLayoutServiceEditServiceIdRouteImport } from './routes/(protected)/_layout/service/edit.$serviceId'
 import { Route as protectedLayoutServiceLayoutServiceIdIndexRouteImport } from './routes/(protected)/_layout/service/_layout/$serviceId/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -54,6 +55,12 @@ const protectedLayoutDashboardLayoutRoute =
     path: '/dashboard',
     getParentRoute: () => protectedLayoutRoute,
   } as any)
+const protectedLayoutServiceEditServiceIdRoute =
+  protectedLayoutServiceEditServiceIdRouteImport.update({
+    id: '/service/edit/$serviceId',
+    path: '/service/edit/$serviceId',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
 const protectedLayoutServiceLayoutServiceIdIndexRoute =
   protectedLayoutServiceLayoutServiceIdIndexRouteImport.update({
     id: '/$serviceId/',
@@ -67,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof protectedLayoutDashboardLayoutRoute
   '/service': typeof protectedLayoutServiceLayoutRouteWithChildren
   '/service/create': typeof protectedLayoutServiceCreateRoute
+  '/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
   '/service/$serviceId/': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -75,6 +83,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof protectedLayoutDashboardLayoutRoute
   '/service': typeof protectedLayoutServiceLayoutRouteWithChildren
   '/service/create': typeof protectedLayoutServiceCreateRoute
+  '/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
   '/service/$serviceId': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
 export interface FileRoutesById {
@@ -86,6 +95,7 @@ export interface FileRoutesById {
   '/(protected)/_layout/dashboard/_layout': typeof protectedLayoutDashboardLayoutRoute
   '/(protected)/_layout/service/_layout': typeof protectedLayoutServiceLayoutRouteWithChildren
   '/(protected)/_layout/service/create': typeof protectedLayoutServiceCreateRoute
+  '/(protected)/_layout/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
   '/(protected)/_layout/service/_layout/$serviceId/': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/service'
     | '/service/create'
+    | '/service/edit/$serviceId'
     | '/service/$serviceId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/service'
     | '/service/create'
+    | '/service/edit/$serviceId'
     | '/service/$serviceId'
   id:
     | '__root__'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
     | '/(protected)/_layout/dashboard/_layout'
     | '/(protected)/_layout/service/_layout'
     | '/(protected)/_layout/service/create'
+    | '/(protected)/_layout/service/edit/$serviceId'
     | '/(protected)/_layout/service/_layout/$serviceId/'
   fileRoutesById: FileRoutesById
 }
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof protectedLayoutDashboardLayoutRouteImport
       parentRoute: typeof protectedLayoutRoute
     }
+    '/(protected)/_layout/service/edit/$serviceId': {
+      id: '/(protected)/_layout/service/edit/$serviceId'
+      path: '/service/edit/$serviceId'
+      fullPath: '/service/edit/$serviceId'
+      preLoaderRoute: typeof protectedLayoutServiceEditServiceIdRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
     '/(protected)/_layout/service/_layout/$serviceId/': {
       id: '/(protected)/_layout/service/_layout/$serviceId/'
       path: '/$serviceId'
@@ -203,6 +223,7 @@ interface protectedLayoutRouteChildren {
   protectedLayoutDashboardLayoutRoute: typeof protectedLayoutDashboardLayoutRoute
   protectedLayoutServiceLayoutRoute: typeof protectedLayoutServiceLayoutRouteWithChildren
   protectedLayoutServiceCreateRoute: typeof protectedLayoutServiceCreateRoute
+  protectedLayoutServiceEditServiceIdRoute: typeof protectedLayoutServiceEditServiceIdRoute
 }
 
 const protectedLayoutRouteChildren: protectedLayoutRouteChildren = {
@@ -210,6 +231,8 @@ const protectedLayoutRouteChildren: protectedLayoutRouteChildren = {
   protectedLayoutServiceLayoutRoute:
     protectedLayoutServiceLayoutRouteWithChildren,
   protectedLayoutServiceCreateRoute: protectedLayoutServiceCreateRoute,
+  protectedLayoutServiceEditServiceIdRoute:
+    protectedLayoutServiceEditServiceIdRoute,
 }
 
 const protectedLayoutRouteWithChildren = protectedLayoutRoute._addFileChildren(

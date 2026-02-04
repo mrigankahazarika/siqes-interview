@@ -19,7 +19,7 @@ class ServciceRequestController extends Controller
         $limit = $request->limit;
 
         // $requests = ServciceRequestModel::paginate($page || 1, $limit || 15);
-        $requests = ServciceRequestModel::paginate($limit, ['*'], $page );
+        $requests = ServciceRequestModel::paginate($limit, ['*'], 'page', $page);
 
         return response()->json($requests);
     }
@@ -28,7 +28,6 @@ class ServciceRequestController extends Controller
     {
         DB::beginTransaction();
         try {
-            //code...
             // once the auth is set , i will add it  currently user is staically set no 1  for testing purpose todo :
             $data = array_merge($request->validated(), [
                     // 'created_by' => auth()->id() 
@@ -61,5 +60,40 @@ class ServciceRequestController extends Controller
             'statues' => $enumsStattues
         ]);
     }
+
+    public function destroy($id)
+    {
+        $request = ServciceRequestModel::find($id);
+
+        $request->delete();
+
+        return response()->json(['message' => 'service request delete done']);
+    }
+
+public function show($id)
+    {
+        $request = ServciceRequestModel::find($id);
+
+        return response()->json(['data' => $request]);
+    }
+
+    public function update(ServciceRequest $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $serviceRequest = ServciceRequestModel::find($id);
+            $serviceRequest->update($request->validated());
+            DB::commit();
+            return response()->json([
+                'data' => $serviceRequest
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+            'message' => 'Failed to update request',
+            'error' => $e->getMessage()
+        ], 500);
+        }
+    }   
 
 }

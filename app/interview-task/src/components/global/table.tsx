@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { useEffect } from 'react'
+import { Link } from '@tanstack/react-router'
 
 import {
   createColumnHelper,
@@ -20,6 +22,24 @@ type Person = {
 
 
 const columnHelper = createColumnHelper<Person>()
+
+
+
+const TableCustom = ({
+  tableData ,
+  setPagination,
+  pageIndex,
+  pageSize,
+  totalItems,
+  onPageChange,
+  onLimitChange,
+  onDelete
+
+}: any)=> {
+  const [data, _setData] = React.useState(() => [...tableData.data])
+  const rerender = React.useReducer(() => ({}), {})[1]
+
+
 
 const columns = [
   columnHelper.accessor('title', {
@@ -57,20 +77,20 @@ const columns = [
       
       return (
         <div className="flex items-center gap-2">
-          <button
-            // onClick={() => handleEdit(item.id)}
+          <Link
+            to={`/service/edit/${item.id}`}
             className="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
           >
             Edit
-          </button>
+          </Link>
           <button
-            // onClick={() => handleEdit(item.id)}
+            // onClick={() => handleView(item.id)}
             className="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
           >
             View
           </button>
           <button
-            // onClick={() => handleDelete(item.id)}
+            onClick={() => handleDelete(item.id, item.title)}
             className="px-3 py-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors"
           >
             Delete
@@ -81,17 +101,23 @@ const columns = [
   },
 ]
 
-const TableCustom = ({
-  tableData ,
-  setPagination,
-  pageIndex,
-  pageSize,
-  totalItems,
-  onPageChange
 
-}: any)=> {
-  const [data, _setData] = React.useState(() => [...tableData.data])
-  const rerender = React.useReducer(() => ({}), {})[1]
+  // Update data when tableData changes
+  React.useEffect(() => {
+    if (tableData?.data) {
+      _setData([...tableData.data])
+    }
+  }, [tableData])
+
+  const handleDelete = (id: string, title: string) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${title}"? This action cannot be undone.`
+    )
+    
+    if (confirmed && onDelete) {
+      onDelete(id)
+    }
+  }
 
   const table = useReactTable({
     data,
@@ -106,7 +132,14 @@ const TableCustom = ({
     pageCount: Math.ceil(totalItems / pageSize),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: onPageChange
+    onPaginationChange: (updater) => {
+      if (typeof updater === 'function') {
+        const newState = updater({ pageIndex, pageSize })
+        onPageChange(newState.pageIndex)
+      } else {
+        onPageChange(updater.pageIndex)
+      }
+    }
   })
 
   return (
@@ -171,6 +204,22 @@ const TableCustom = ({
           Next
         </button>
         </div>
+        <div className="flex items-center gap-2 ml-auto">
+        <span className="text-sm ">Show</span>
+        <select
+            className="border rounded p-1 text-sm bg-white"
+            value={table.getState().pagination.pageSize}
+            onChange={e => {
+                onLimitChange(Number(e.target.value))
+            }}
+        >
+            {[2, 5, 10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                    {pageSize}
+                </option>
+            ))}
+        </select>
+    </div>
     </div>
   )
 }

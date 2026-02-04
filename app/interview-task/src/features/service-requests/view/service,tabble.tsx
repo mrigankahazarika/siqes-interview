@@ -1,16 +1,30 @@
 import { Link } from "@tanstack/react-router";
 import TableCustom from "../../../components/global/table"
 import { useGetServicrequests } from "../hooks/useServicesList.query"
+import { useDeleteServiceRequest } from "../hooks/useDeleteServiceRequests.mutation"
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const ServicesTable = ()=> {
 
-    // const query = 
+    const query = useQueryClient();
     const [pagination , setPagination] = useState<any>({
         page : 1,
         limit : 2
     })
     const {data, isFetching} = useGetServicrequests(pagination.page , pagination.limit);
+    const { mutate: deleteService, isPending: isDeleting } = useDeleteServiceRequest()
+
+    const handleDelete = (id: string) => {
+
+        // return;
+        deleteService(id, {
+            onSuccess: () => {
+                console.log('delete');
+                query.invalidateQueries({ queryKey: ['serviceRequests', pagination.page, pagination.limit] });
+            }
+        })
+    }
 
     // console.log(data, isFetching, 'data, isFetching');
     // 
@@ -36,8 +50,13 @@ export const ServicesTable = ()=> {
                     page: pageIndex + 1
                 }))
             }}
+            onLimitChange={(newLimit) => {
+                    setPagination(prev => ({ ...prev, limit: newLimit, page: 1 })) // Reset to page 1
+                }}
+            onDelete={handleDelete}
         />
         {isFetching && <span> Updating...</span>}
+        {isDeleting && <span> Deleting...</span>}
         </div>
     )
 }

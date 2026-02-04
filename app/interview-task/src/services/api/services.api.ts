@@ -44,3 +44,23 @@ export const fetchServiceTypes = async () => {
     return res.data;
 }
 
+// for update
+export const update = async (id: string, payload: DataStore) => {
+    try {
+        const res = await apiClient.put(`service_request/${id}`, payload)
+        return res.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+// for delete
+export const deleteService = async (id: string) => {
+    try {
+        const res = await apiClient.delete(`service_request/${id}`)
+        return res.data;
+    } catch (error) {
+        return error;
+    }
+}
+

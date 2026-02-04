@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const getServicesRequests : any = (page : number , limit: number)=> {
     return {
-        queryKey : ['serviceRequests'],
+        queryKey : ['serviceRequests', page , limit],
         queryFn : ()=> fetch(page, limit)
     }
 }

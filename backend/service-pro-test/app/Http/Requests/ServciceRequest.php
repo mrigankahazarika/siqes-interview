@@ -25,6 +25,7 @@ class ServciceRequest extends FormRequest
     public function rules(): array
     {
        return [
+            'id' => 'sometimes|integer|exists:servcice_requests,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'created_by' => 'required|integer',
