@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('priority')->default(ServiceRequestPriority::LOW->value);
             $table->string('status')->default(ServiceRequestStatuses::OPEN->value);
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
     }
 

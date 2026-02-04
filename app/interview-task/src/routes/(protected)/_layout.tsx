@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(protected)/_layout')({
   component: RouteComponent,
@@ -10,5 +10,8 @@ export const Route = createFileRoute('/(protected)/_layout')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/(protected)/fsdfds"!</div>
+  return <div>Hello "/(protected)/service index"!
+
+    <Outlet />
+  </div>
 }

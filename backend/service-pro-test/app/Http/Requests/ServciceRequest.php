@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Enums\ServiceRequestCategory;
 use App\Enums\ServiceRequestPriority;
+use Illuminate\Validation\Rules\Enum;
 
 class ServciceRequest extends FormRequest
 {
@@ -26,6 +27,7 @@ class ServciceRequest extends FormRequest
        return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'created_by' => 'required|integer',
             'category' => [new Enum(ServiceRequestCategory::class)],
             'priority' => [new Enum(ServiceRequestPriority::class)],
         ];

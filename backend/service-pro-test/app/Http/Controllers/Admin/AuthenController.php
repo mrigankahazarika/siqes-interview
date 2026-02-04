@@ -20,6 +20,7 @@ class AuthenController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'access_token' => $token,
+            'user' => auth()->user()
         ]);
     }
     
@@ -31,12 +32,13 @@ class AuthenController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // return $this->respondWithToken($token);
+        return $this->respondWithToken($token);
         return response()->json([
             'message' => 'Authenticated'
             ])->cookie(
                 'token',           
-                respondWithToken($token),            
+                // respondWithToken($token),            
+                $token,            
                 60,                
                 '/',               
                 null,              
