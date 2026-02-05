@@ -15,7 +15,7 @@ interface IPagination {
 
 export const create = async (payload : DataStore) => {
     try {
-        const res = await apiClient.post('service_request', payload)
+        const res = await apiClient.post('auth/service_request', payload)
         return res.data;
     } catch (error) {
         return error;

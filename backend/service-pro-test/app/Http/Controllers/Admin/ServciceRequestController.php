@@ -11,6 +11,8 @@ use App\Http\Requests\ServciceRequest;
 use App\Models\ServciceRequestModel;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Resources\ServiceRequests;
+
 class ServciceRequestController extends Controller
 {
     public function index(Request $request)
@@ -21,7 +23,9 @@ class ServciceRequestController extends Controller
         // $requests = ServciceRequestModel::paginate($page || 1, $limit || 15);
         $requests = ServciceRequestModel::paginate($limit, ['*'], 'page', $page);
 
-        return response()->json($requests);
+        // return response()->json($requests);
+
+        return ServiceRequests::collection($requests);
     }
 
     public function store(ServciceRequest $request)

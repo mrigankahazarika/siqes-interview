@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class ServciceRequestModel extends Model
 {
-    protected $table = 'service_requests';
+    use softDeletes;    
+protected $table = 'service_requests';
+
+
     public $timestamps = false;
 
    protected $fillable = [
