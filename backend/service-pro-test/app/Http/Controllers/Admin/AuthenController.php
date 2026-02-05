@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AuthenController extends Controller
 {
@@ -16,7 +17,7 @@ class AuthenController extends Controller
 
      protected function respondWithToken($token)
     {
-        return response()->json([
+        return response()->json([   
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'access_token' => $token,
@@ -56,4 +57,43 @@ class AuthenController extends Controller
     //             'Strict'           
     //         );
     }   
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'sometimes|string|min:6|confirmed',
+            'avatar' => 'sometimes|image|max:2048',
+        ]);
+
+        // if ($request->has('name')) {
+        //     $user->name = $request->input('name');
+        // }
+
+        // if ($request->has('email')) {
+        //     $user->email = $request->input('email');
+        // }
+
+        // if ($request->has('password')) {
+        //     $user->password = bcrypt($request->input('password'));
+        // }
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+            $path = $request->file('avatar')->store('avatars', 'public');
+            // $avatar->move(public_path('avatars'), $avatarName);
+
+            $user->avatar = $path;
+        }
+
+        $user->save();
+
+        return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
+    }
+
+
 }

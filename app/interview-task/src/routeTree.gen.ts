@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as publicLayoutRouteImport } from './routes/(public)/_layout'
 import { Route as protectedLayoutRouteImport } from './routes/(protected)/_layout'
 import { Route as publicLayoutLoginRouteImport } from './routes/(public)/_layout/login'
+import { Route as protectedLayoutUserEditRouteImport } from './routes/(protected)/_layout/user/edit'
+import { Route as protectedLayoutUserLayoutRouteImport } from './routes/(protected)/_layout/user/_layout'
 import { Route as protectedLayoutServiceCreateRouteImport } from './routes/(protected)/_layout/service/create'
 import { Route as protectedLayoutServiceLayoutRouteImport } from './routes/(protected)/_layout/service/_layout'
 import { Route as protectedLayoutDashboardLayoutRouteImport } from './routes/(protected)/_layout/dashboard/_layout'
@@ -37,6 +39,17 @@ const publicLayoutLoginRoute = publicLayoutLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => publicLayoutRoute,
 } as any)
+const protectedLayoutUserEditRoute = protectedLayoutUserEditRouteImport.update({
+  id: '/user/edit',
+  path: '/user/edit',
+  getParentRoute: () => protectedLayoutRoute,
+} as any)
+const protectedLayoutUserLayoutRoute =
+  protectedLayoutUserLayoutRouteImport.update({
+    id: '/user/_layout',
+    path: '/user',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
 const protectedLayoutServiceCreateRoute =
   protectedLayoutServiceCreateRouteImport.update({
     id: '/service/create',
@@ -74,6 +87,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof protectedLayoutDashboardLayoutRoute
   '/service': typeof protectedLayoutServiceLayoutRouteWithChildren
   '/service/create': typeof protectedLayoutServiceCreateRoute
+  '/user': typeof protectedLayoutUserLayoutRoute
+  '/user/edit': typeof protectedLayoutUserEditRoute
   '/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
   '/service/$serviceId/': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
@@ -83,6 +98,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof protectedLayoutDashboardLayoutRoute
   '/service': typeof protectedLayoutServiceLayoutRouteWithChildren
   '/service/create': typeof protectedLayoutServiceCreateRoute
+  '/user': typeof protectedLayoutUserLayoutRoute
+  '/user/edit': typeof protectedLayoutUserEditRoute
   '/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
   '/service/$serviceId': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
@@ -95,6 +112,8 @@ export interface FileRoutesById {
   '/(protected)/_layout/dashboard/_layout': typeof protectedLayoutDashboardLayoutRoute
   '/(protected)/_layout/service/_layout': typeof protectedLayoutServiceLayoutRouteWithChildren
   '/(protected)/_layout/service/create': typeof protectedLayoutServiceCreateRoute
+  '/(protected)/_layout/user/_layout': typeof protectedLayoutUserLayoutRoute
+  '/(protected)/_layout/user/edit': typeof protectedLayoutUserEditRoute
   '/(protected)/_layout/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
   '/(protected)/_layout/service/_layout/$serviceId/': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
@@ -106,6 +125,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/service'
     | '/service/create'
+    | '/user'
+    | '/user/edit'
     | '/service/edit/$serviceId'
     | '/service/$serviceId/'
   fileRoutesByTo: FileRoutesByTo
@@ -115,6 +136,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/service'
     | '/service/create'
+    | '/user'
+    | '/user/edit'
     | '/service/edit/$serviceId'
     | '/service/$serviceId'
   id:
@@ -126,6 +149,8 @@ export interface FileRouteTypes {
     | '/(protected)/_layout/dashboard/_layout'
     | '/(protected)/_layout/service/_layout'
     | '/(protected)/_layout/service/create'
+    | '/(protected)/_layout/user/_layout'
+    | '/(protected)/_layout/user/edit'
     | '/(protected)/_layout/service/edit/$serviceId'
     | '/(protected)/_layout/service/_layout/$serviceId/'
   fileRoutesById: FileRoutesById
@@ -165,6 +190,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/login'
       preLoaderRoute: typeof publicLayoutLoginRouteImport
       parentRoute: typeof publicLayoutRoute
+    }
+    '/(protected)/_layout/user/edit': {
+      id: '/(protected)/_layout/user/edit'
+      path: '/user/edit'
+      fullPath: '/user/edit'
+      preLoaderRoute: typeof protectedLayoutUserEditRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
+    '/(protected)/_layout/user/_layout': {
+      id: '/(protected)/_layout/user/_layout'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof protectedLayoutUserLayoutRouteImport
+      parentRoute: typeof protectedLayoutRoute
     }
     '/(protected)/_layout/service/create': {
       id: '/(protected)/_layout/service/create'
@@ -223,6 +262,8 @@ interface protectedLayoutRouteChildren {
   protectedLayoutDashboardLayoutRoute: typeof protectedLayoutDashboardLayoutRoute
   protectedLayoutServiceLayoutRoute: typeof protectedLayoutServiceLayoutRouteWithChildren
   protectedLayoutServiceCreateRoute: typeof protectedLayoutServiceCreateRoute
+  protectedLayoutUserLayoutRoute: typeof protectedLayoutUserLayoutRoute
+  protectedLayoutUserEditRoute: typeof protectedLayoutUserEditRoute
   protectedLayoutServiceEditServiceIdRoute: typeof protectedLayoutServiceEditServiceIdRoute
 }
 
@@ -231,6 +272,8 @@ const protectedLayoutRouteChildren: protectedLayoutRouteChildren = {
   protectedLayoutServiceLayoutRoute:
     protectedLayoutServiceLayoutRouteWithChildren,
   protectedLayoutServiceCreateRoute: protectedLayoutServiceCreateRoute,
+  protectedLayoutUserLayoutRoute: protectedLayoutUserLayoutRoute,
+  protectedLayoutUserEditRoute: protectedLayoutUserEditRoute,
   protectedLayoutServiceEditServiceIdRoute:
     protectedLayoutServiceEditServiceIdRoute,
 }

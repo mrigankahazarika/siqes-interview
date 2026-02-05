@@ -12,7 +12,7 @@ export const ServicesTable = ()=> {
         page : 1,
         limit : 2
     })
-    const {data, isFetching} = useGetServicrequests(pagination.page , pagination.limit);
+    const {data, isFetching} : any = useGetServicrequests(pagination.page , pagination.limit);
     const { mutate: deleteService, isPending: isDeleting } = useDeleteServiceRequest()
 
     const handleDelete = (id: string) => {

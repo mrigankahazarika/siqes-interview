@@ -17,8 +17,13 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'auth'], function () {
     Route::get('/test', function(Request $request){
         return response()->json(['message' => 'check auth route']);
     });
+
     Route::get('me', [AuthenController::class , 'me']);
+
+    Route::patch('me', [AuthenController::class , 'updateProfile']);
     // for all the auth route set here with auth middleware
+    Route::get('service_request/types',[ServciceRequestController::class, 'getTypesx']);
+    Route::apiResource('service_request', ServciceRequestController::class)->except('put');
 });
 
 
@@ -28,5 +33,3 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'auth'], function () {
 // Route::get('service_request/priority', [ServciceRequestController::class, 'getPriority']);
 // Route::get('service_request/category', [ServciceRequestController::class, 'getTypesx']);
 
-Route::get('service_request/types',[ServciceRequestController::class, 'getTypesx']);
-Route::apiResource('service_request', ServciceRequestController::class)->except('put');

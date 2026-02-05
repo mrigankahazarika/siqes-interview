@@ -37,7 +37,7 @@ class ServciceRequestController extends Controller
                 DB::commit();
             return response()->json([
                 'data' => $create
-            ]);
+            ], 201);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
@@ -86,7 +86,7 @@ public function show($id)
             DB::commit();
             return response()->json([
                 'data' => $serviceRequest
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([

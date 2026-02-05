@@ -12,6 +12,29 @@ const apiClient = axios.create({
   withCredentials: false,
 });
 
+
+export  const apiclientformdata = axios.create({
+    baseURL : API_BASE_URL,
+    headers : {
+        'Content-Type' : 'multipart/form-data'
+    },
+    withCredentials : false,
+})
+
+apiclientformdata.interceptors.request.use(
+  (config) => {
+    const token = TokenService.getLocalAccessToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+
 apiClient.interceptors.request.use(
   (config) => {
     const token = TokenService.getLocalAccessToken();

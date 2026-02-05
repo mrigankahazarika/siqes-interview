@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   component: Index,
+  
    beforeLoad: ({ context, location }) => {
       // If no user, throw a redirect immediately
       if (!context.auth.user) {

@@ -26,28 +26,28 @@ export const create = async (payload : DataStore) => {
 // for list fetch
 export const fetch = async (page : number , limit : number) => {
     // const res = await apiClient.get(`service_request?${params}`, )
-    const res = await apiClient.get(`service_request?page=${page}&limit=${limit}`, )
+    const res = await apiClient.get(`auth/service_request?page=${page}&limit=${limit}`, )
     return res.data;
 }
 
 // for list fetchDetails
 export const single = async (id : string) => {
     // const res = await apiClient.get(`service_request?${params}`, )
-    const res = await apiClient.get(`service_request/${id}`, )
+    const res = await apiClient.get(`auth/service_request/${id}`, )
     return res.data;
 }
 
 
 
 export const fetchServiceTypes = async () => {
-    const res = await apiClient.get(`service_request/types`)
+    const res = await apiClient.get(`auth/service_request/types`)
     return res.data;
 }
 
 // for update
 export const update = async (id: string, payload: DataStore) => {
     try {
-        const res = await apiClient.put(`service_request/${id}`, payload)
+        const res = await apiClient.put(`auth/service_request/${id}`, payload)
         return res.data;
     } catch (error) {
         return error;
@@ -57,7 +57,7 @@ export const update = async (id: string, payload: DataStore) => {
 // for delete
 export const deleteService = async (id: string) => {
     try {
-        const res = await apiClient.delete(`service_request/${id}`)
+        const res = await apiClient.delete(`auth/service_request/${id}`)
         return res.data;
     } catch (error) {
         return error;
