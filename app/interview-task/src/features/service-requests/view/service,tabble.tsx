@@ -39,7 +39,7 @@ export const ServicesTable = ()=> {
         <TableCustom  
         
         tableData={data} 
-            totalItems={data.total} 
+            totalItems={data?.meta?.total || 0} 
             pageIndex={pagination.page - 1} 
             pageSize={pagination.limit} 
             onPageChange={(pageIndex) => {

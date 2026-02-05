@@ -12,7 +12,7 @@ class ServciceRequestModel extends Model
 protected $table = 'service_requests';
 
 
-    public $timestamps = false;
+    // public $timestamps = false;
 
    protected $fillable = [
         'title',
