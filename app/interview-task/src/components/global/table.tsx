@@ -33,7 +33,8 @@ const TableCustom = ({
   totalItems,
   onPageChange,
   onLimitChange,
-  onDelete
+  onDelete,
+  onStatusUpdate
 
 }: any)=> {
   const [data, _setData] = React.useState(() => [...tableData.data])
@@ -95,6 +96,12 @@ const columns = [
           >
             Delete
           </button>
+          <button
+            onClick={() => onStatusUpdate(item.id, item.title)}
+            className="px-3 py-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors"
+          >
+            Update Status
+          </button>
         </div>
       )
     },
@@ -102,7 +109,6 @@ const columns = [
 ]
 
 
-  // Update data when tableData changes
   React.useEffect(() => {
     if (tableData?.data) {
       _setData([...tableData.data])

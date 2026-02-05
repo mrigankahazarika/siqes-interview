@@ -8,6 +8,7 @@ use App\Enums\ServiceRequestCategory;
 use App\Enums\ServiceRequestPriority;
 use App\Enums\ServiceRequestStatuses;
 use App\Http\Requests\ServciceRequest;
+use App\Http\Requests\ServiceRequestUpdate;
 use App\Models\ServciceRequestModel;
 use Illuminate\Support\Facades\DB;
 
@@ -74,18 +75,20 @@ class ServciceRequestController extends Controller
         return response()->json(['message' => 'service request delete done']);
     }
 
-public function show($id)
+        public function show($id)
     {
         $request = ServciceRequestModel::find($id);
 
         return response()->json(['data' => $request]);
     }
 
-    public function update(ServciceRequest $request, $id)
+    public function update(ServiceRequestUpdate $request, $id)
     {
         DB::beginTransaction();
         try {
-            $serviceRequest = ServciceRequestModel::find($id);
+// return $id;
+$serviceRequest = ServciceRequestModel::find($id);
+// return $request->validated();
             $serviceRequest->update($request->validated());
             DB::commit();
             return response()->json([
@@ -99,5 +102,25 @@ public function show($id)
         ], 500);
         }
     }   
+
+    // patch requst directing to update function
+    // public function patch(Request $request, $id)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $serviceRequest = ServciceRequestModel::find($id);
+    //         $serviceRequest->update($request->all());
+    //         DB::commit();
+    //         return response()->json([
+    //             'data' => $serviceRequest
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         return response()->json([
+    //         'message' => 'Failed to update request',
+    //         'error' => $e->getMessage()
+    //     ], 500);
+    //     }
+    // }
 
 }

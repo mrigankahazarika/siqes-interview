@@ -45,9 +45,9 @@ export const fetchServiceTypes = async () => {
 }
 
 // for update
-export const update = async (id: string, payload: DataStore) => {
+export const update = async (id: string, payload: any) => {
     try {
-        const res = await apiClient.put(`auth/service_request/${id}`, payload)
+        const res = await apiClient.patch(`auth/service_request/${id}`, payload)
         return res.data;
     } catch (error) {
         return error;

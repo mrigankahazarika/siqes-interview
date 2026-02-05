@@ -10,12 +10,14 @@ export const useUpdateServiceRequest = ()=> {
             if (data.status=== 422) {
                 return data;
             }
+            console.log(data, 'if success');
+            
             if (data.data) {
                 alert('Service updated')                
             }
         },
         onError : (data : any)=> {
-            console.log(data, 'error data mutation');
+            console.log(data.response, 'error data mutation');
         }
     })
 }
