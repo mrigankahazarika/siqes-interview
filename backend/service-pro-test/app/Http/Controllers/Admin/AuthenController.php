@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\UserResource;
 
 class AuthenController extends Controller
 {
@@ -27,8 +28,9 @@ class AuthenController extends Controller
 
     public function me()
     {
-        
-        return response()->json(auth()->user());
+        $user = auth()->user();
+
+        return response()->json(new UserResource($user));
     }
     
     public function login(LoginRequest $login){

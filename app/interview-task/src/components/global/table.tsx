@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useEffect } from 'react'
 import { Link } from '@tanstack/react-router'
 
 import {
@@ -17,7 +16,11 @@ type Person = {
   category: number
   priority: number
   status: string
-  created_by: number
+  user: {
+    id: number
+    name: string
+    email: string
+  }
 }
 
 
@@ -59,25 +62,32 @@ const columns = [
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('priority', {
-    header: () => <span>Visits</span>,
+    header: () => <span>priority</span>,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('status', {
     header: 'Status',
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('created_by', {
-    header: 'Profile Progress',
+  columnHelper.accessor('user', {
+    header: 'USer Info',
+    cell: (info) => {
+        const value = info.getValue();
+        return  <>
+        <p>{(value && value.name) }</p>
+        <p>{(value && value.email) }</p>
+        </>
+    },
     footer: (info) => info.column.id,
   }),
   {
     id: 'actions',
     header: 'Actions',
     cell: ({ row }: any) => {
-      const item = row.original // Access the full data object for this row
+      const item = row.original 
       
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Link
             to={`/service/edit/${item.id}`}
             className="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors"

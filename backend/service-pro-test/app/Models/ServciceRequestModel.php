@@ -22,4 +22,9 @@ protected $table = 'service_requests';
         'status',
         'created_by'
     ];
+
+
+    public function userGet(){
+        return $this->belongsTo(User::class,'created_by');
+    }
 }

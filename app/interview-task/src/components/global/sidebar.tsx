@@ -35,7 +35,7 @@ export const Sidebar = () => {
 
     const {data : userInfo, isFetching} : any = useAuthmeGet();
 
-    console.log(userInfo,'userInfo');
+    // console.log(userInfo,'userInfo');/
     
 
     return (
@@ -47,7 +47,12 @@ export const Sidebar = () => {
 
             {
                 !isFetching && <div className="bg-[white] p-2 rounded-xl mb-5">
-                    <img src={userInfo?.avatar} alt="User Avatar" className="w-16 h-16 rounded-full object-cover" />
+                    {
+                        !userInfo?.avatar && <div className="w-16 h-16 rounded-full object-cover">
+                            No Image
+                        </div>
+                    }
+                    <img src={import.meta.env.VITE_API_BASE_URL_IMAGE + '/storage/' + userInfo?.avatar} alt="User Avatar" className="w-16 h-16 rounded-full object-cover" />
                     <h3 className="font-bold">Hello,</h3>
                     <p>{userInfo?.name}</p>
                     <p>{userInfo?.email}</p>

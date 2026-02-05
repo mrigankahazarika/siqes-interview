@@ -23,7 +23,13 @@ class ServiceRequests extends JsonResource
             "category" => $this->category,
             "priority" => $this->priority,
             "status" => $this->status,
-            "created_by" => $this->created_by,
+            // "created_by" => $this->created_by,
+             "user" =>  [
+                    'id' => $this->userGet->id,
+                    'name' => $this->userGet->name,
+                    'email' => $this->userGet->email,
+                    'avatar' => $this->userGet->avatar,
+                ],
             "created_at" => $this->created_at,
             // "updated_at" => $this->updated_at->format('Y-m-d'),
             ];

@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { useUserEditProfileMutation } from "../hooks/mutatiion/userUserEdit.mutation";
 import { useForm } from "@tanstack/react-form";
 
@@ -16,17 +17,20 @@ export default function USerImageUploadForm() {
         formData.append('avatar', values.value.image);
       }
       await mutateAsync(formData)
+      toast.success('Image uploaded successfully');
     },
   })
 
   return (
-    <div>
+    <div className="m-5">
       <h1>User Image Upload Form</h1>
 
       <form onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
-      }}>
+      }}
+        className="flex flex-col m-5"
+      >
         <form.Field
           name='image'
           children={(field) =>
@@ -44,7 +48,7 @@ export default function USerImageUploadForm() {
             </>
           }
         />
-        <button className="bg-[teal]" type="submit" disabled={isPending}>
+        <button className="bg-[teal] p-5 text-white mt-4" type="submit" disabled={isPending}>
           {isPending ? 'Uploading...' : 'Upload'}
         </button>
       </form>
