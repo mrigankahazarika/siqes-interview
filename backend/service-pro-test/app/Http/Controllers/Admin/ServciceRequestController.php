@@ -39,12 +39,16 @@ class ServciceRequestController extends Controller
 
     public function store(ServciceRequest $request)
     {
+
+//  return response()->json([
+//                 'data' => auth()->user()
+//             ], 201);
         DB::beginTransaction();
         try {
             // once the auth is set , i will add it  currently user is staically set no 1  for testing purpose todo :
             $data = array_merge($request->validated(), [
-                    // 'created_by' => auth()->id() 
-                    'created_by' => 1 
+                    'created_by' => auth()->id() 
+                    // 'created_by' => 1 
                 ]);
                 $create = ServciceRequestModel::create($request->validated());
                 DB::commit();
