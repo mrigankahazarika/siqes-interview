@@ -24,9 +24,12 @@ export const create = async (payload : DataStore) => {
 
 
 // for list fetch
-export const fetch = async (page : number , limit : number) => {
-    // const res = await apiClient.get(`service_request?${params}`, )
-    const res = await apiClient.get(`auth/service_request?page=${page}&limit=${limit}`, )
+export const fetch = async (page : number , limit : number, status?: string, sort?: string) => {
+    //  will fix later , working now no issues TODO
+    let url = `auth/service_request?page=${page}&limit=${limit}`;
+    if (status) url += `&status=${status}`;
+    if (sort) url += `&sort=${sort}`;
+    const res = await apiClient.get(url)
     return res.data;
 }
 
@@ -38,11 +41,12 @@ export const single = async (id : string) => {
 }
 
 
-
+// store it in context, the data TODO: 
 export const fetchServiceTypes = async () => {
     const res = await apiClient.get(`auth/service_request/types`)
     return res.data;
 }
+// store it in context 
 
 // for update
 export const update = async (id: string, payload: any) => {

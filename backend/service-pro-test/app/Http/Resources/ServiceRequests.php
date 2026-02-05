@@ -18,8 +18,10 @@ class ServiceRequests extends JsonResource
         return [
 
             "id" => $this->id,
-            "title" => $this->title . 'this too',
-            "description" => $this->description . 'we can modyfy the data on api resources',
+            // "title" => $this->title . 'this too',
+            // "description" => $this->description . 'we can modyfy the data on api resources',
+            "title" => $this->title ,
+            "description" => $this->description,
             "category" => $this->category,
             "priority" => $this->priority,
             "status" => $this->status,

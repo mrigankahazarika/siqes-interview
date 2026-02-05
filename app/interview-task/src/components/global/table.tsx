@@ -24,28 +24,9 @@ type Person = {
 }
 
 
-const columnHelper = createColumnHelper<Person>()
+export  const columnHelper = createColumnHelper<Person>()
 
-
-
-const TableCustom = ({
-  tableData ,
-  setPagination,
-  pageIndex,
-  pageSize,
-  totalItems,
-  onPageChange,
-  onLimitChange,
-  onDelete,
-  onStatusUpdate
-
-}: any)=> {
-  const [data, _setData] = React.useState(() => [...tableData.data])
-  const rerender = React.useReducer(() => ({}), {})[1]
-
-
-
-const columns = [
+export const getTableColumns = (onDelete: (id: string) => void, onStatusUpdate: (id: string) => void) => [
   columnHelper.accessor('title', {
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
@@ -101,13 +82,18 @@ const columns = [
             View
           </button>
           <button
-            onClick={() => handleDelete(item.id, item.title)}
+            onClick={() => {
+              const confirmed = window.confirm(
+                `Are you sure you want to delete "${item.title}"? This action cannot be undone.`
+              )
+              if (confirmed) onDelete(item.id)
+            }}
             className="px-3 py-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors"
           >
             Delete
           </button>
           <button
-            onClick={() => onStatusUpdate(item.id, item.title)}
+            onClick={() => onStatusUpdate(item.id)}
             className="px-3 py-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors"
           >
             Update Status
@@ -119,21 +105,29 @@ const columns = [
 ]
 
 
+
+const TableCustom = ({
+  tableData ,
+  setPagination,
+  pageIndex,
+  pageSize,
+  totalItems,
+  onPageChange,
+  onLimitChange,
+  onDelete,
+  onStatusUpdate,
+  columns
+
+}: any)=> {
+  const [data, _setData] = React.useState(() => [...tableData.data])
+  const rerender = React.useReducer(() => ({}), {})[1]
+
+
   React.useEffect(() => {
     if (tableData?.data) {
       _setData([...tableData.data])
     }
   }, [tableData])
-
-  const handleDelete = (id: string, title: string) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to delete "${title}"? This action cannot be undone.`
-    )
-    
-    if (confirmed && onDelete) {
-      onDelete(id)
-    }
-  }
 
   const table = useReactTable({
     data,

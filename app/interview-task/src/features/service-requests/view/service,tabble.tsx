@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import TableCustom from "../../../components/global/table"
+import TableCustom, { getTableColumns } from "../../../components/global/table"
 import { useGetServicrequests } from "../hooks/useServicesList.query"
 import { useDeleteServiceRequest } from "../hooks/useDeleteServiceRequests.mutation"
 import { useState } from "react";
@@ -14,9 +14,13 @@ export const ServicesTable = () => {
         page: 1,
         limit: 2
     })
+    const [filters, setFilters] = useState({
+        status: '',
+        sort: 'desc'
+    })
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [dialogData , setDialogData] = useState<any>(null);
-    const { data, isFetching }: any = useGetServicrequests(pagination.page, pagination.limit);
+    const { data, isFetching }: any = useGetServicrequests(pagination.page, pagination.limit, filters.status, filters.sort);
     const { mutate: deleteService, isPending: isDeleting } = useDeleteServiceRequest()
 
     const handleDelete = (id: string) => {
@@ -25,7 +29,7 @@ export const ServicesTable = () => {
         deleteService(id, {
             onSuccess: () => {
                 console.log('delete');
-                query.invalidateQueries({ queryKey: ['serviceRequests', pagination.page, pagination.limit] });
+                query.invalidateQueries({ queryKey: ['serviceRequests', pagination.page, pagination.limit, filters.status, filters.sort] });
             }
         })
     }
@@ -44,6 +48,34 @@ export const ServicesTable = () => {
 
     return (
         <div className="flex flex-col w-full">
+            {/* Filters */}
+            <div className="flex gap-4 p-4">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Status</label>
+                    <select
+                        value={filters.status}
+                        onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    >
+                        <option value="">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Sort by Date</label>
+                    <select
+                        value={filters.sort}
+                        onChange={(e) => setFilters(prev => ({ ...prev, sort: e.target.value }))}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    >
+                        <option value="desc">Newest First</option>
+                        <option value="asc">Oldest First</option>
+                    </select>
+                </div>
+            </div>
             <Link to="/service/create" className="bg-[teal] text-white p-3 m-3 ml-auto">Add Service Request</Link>
             {/* <ServicesTable /> */}
 
@@ -67,6 +99,7 @@ export const ServicesTable = () => {
                 }}
                 onDelete={handleDelete}
                 onStatusUpdate={onStatusUpdate}
+                columns={getTableColumns(handleDelete, onStatusUpdate)}
             />
             {isFetching && <span> Updating...</span>}
             {isDeleting && <span> Deleting...</span>}

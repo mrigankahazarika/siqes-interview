@@ -20,11 +20,18 @@ class ServciceRequestController extends Controller
     {
         $page = $request->page;
         $limit = $request->limit;
+        $status = $request->status;
+        $sort = $request->sort ?? 'desc';
 
-        // $requests = ServciceRequestModel::paginate($page || 1, $limit || 15);
-        $requests = ServciceRequestModel::with('userGet')->paginate($limit, ['*'], 'page', $page);
+        $query = ServciceRequestModel::with('userGet');
 
-        // return response()->json($requests);
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $query->orderBy('created_at', $sort);
+
+        $requests = $query->paginate($limit, ['*'], 'page', $page);
 
         return ServiceRequests::collection($requests);
     }
