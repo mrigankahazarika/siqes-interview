@@ -10,33 +10,155 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as publicLayoutRouteImport } from './routes/(public)/_layout'
+import { Route as protectedLayoutRouteImport } from './routes/(protected)/_layout'
+import { Route as publicLayoutLoginRouteImport } from './routes/(public)/_layout/login'
+import { Route as protectedLayoutUserEditRouteImport } from './routes/(protected)/_layout/user/edit'
+import { Route as protectedLayoutUserLayoutRouteImport } from './routes/(protected)/_layout/user/_layout'
+import { Route as protectedLayoutServiceCreateRouteImport } from './routes/(protected)/_layout/service/create'
+import { Route as protectedLayoutServiceLayoutRouteImport } from './routes/(protected)/_layout/service/_layout'
+import { Route as protectedLayoutDashboardLayoutRouteImport } from './routes/(protected)/_layout/dashboard/_layout'
+import { Route as protectedLayoutServiceEditServiceIdRouteImport } from './routes/(protected)/_layout/service/edit.$serviceId'
+import { Route as protectedLayoutServiceLayoutServiceIdIndexRouteImport } from './routes/(protected)/_layout/service/_layout/$serviceId/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const publicLayoutRoute = publicLayoutRouteImport.update({
+  id: '/(public)/_layout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const protectedLayoutRoute = protectedLayoutRouteImport.update({
+  id: '/(protected)/_layout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicLayoutLoginRoute = publicLayoutLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => publicLayoutRoute,
+} as any)
+const protectedLayoutUserEditRoute = protectedLayoutUserEditRouteImport.update({
+  id: '/user/edit',
+  path: '/user/edit',
+  getParentRoute: () => protectedLayoutRoute,
+} as any)
+const protectedLayoutUserLayoutRoute =
+  protectedLayoutUserLayoutRouteImport.update({
+    id: '/user/_layout',
+    path: '/user',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
+const protectedLayoutServiceCreateRoute =
+  protectedLayoutServiceCreateRouteImport.update({
+    id: '/service/create',
+    path: '/service/create',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
+const protectedLayoutServiceLayoutRoute =
+  protectedLayoutServiceLayoutRouteImport.update({
+    id: '/service/_layout',
+    path: '/service',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
+const protectedLayoutDashboardLayoutRoute =
+  protectedLayoutDashboardLayoutRouteImport.update({
+    id: '/dashboard/_layout',
+    path: '/dashboard',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
+const protectedLayoutServiceEditServiceIdRoute =
+  protectedLayoutServiceEditServiceIdRouteImport.update({
+    id: '/service/edit/$serviceId',
+    path: '/service/edit/$serviceId',
+    getParentRoute: () => protectedLayoutRoute,
+  } as any)
+const protectedLayoutServiceLayoutServiceIdIndexRoute =
+  protectedLayoutServiceLayoutServiceIdIndexRouteImport.update({
+    id: '/$serviceId/',
+    path: '/$serviceId/',
+    getParentRoute: () => protectedLayoutServiceLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof publicLayoutLoginRoute
+  '/dashboard': typeof protectedLayoutDashboardLayoutRoute
+  '/service': typeof protectedLayoutServiceLayoutRouteWithChildren
+  '/service/create': typeof protectedLayoutServiceCreateRoute
+  '/user': typeof protectedLayoutUserLayoutRoute
+  '/user/edit': typeof protectedLayoutUserEditRoute
+  '/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
+  '/service/$serviceId/': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof publicLayoutLoginRoute
+  '/dashboard': typeof protectedLayoutDashboardLayoutRoute
+  '/service': typeof protectedLayoutServiceLayoutRouteWithChildren
+  '/service/create': typeof protectedLayoutServiceCreateRoute
+  '/user': typeof protectedLayoutUserLayoutRoute
+  '/user/edit': typeof protectedLayoutUserEditRoute
+  '/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
+  '/service/$serviceId': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(protected)/_layout': typeof protectedLayoutRouteWithChildren
+  '/(public)/_layout': typeof publicLayoutRouteWithChildren
+  '/(public)/_layout/login': typeof publicLayoutLoginRoute
+  '/(protected)/_layout/dashboard/_layout': typeof protectedLayoutDashboardLayoutRoute
+  '/(protected)/_layout/service/_layout': typeof protectedLayoutServiceLayoutRouteWithChildren
+  '/(protected)/_layout/service/create': typeof protectedLayoutServiceCreateRoute
+  '/(protected)/_layout/user/_layout': typeof protectedLayoutUserLayoutRoute
+  '/(protected)/_layout/user/edit': typeof protectedLayoutUserEditRoute
+  '/(protected)/_layout/service/edit/$serviceId': typeof protectedLayoutServiceEditServiceIdRoute
+  '/(protected)/_layout/service/_layout/$serviceId/': typeof protectedLayoutServiceLayoutServiceIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/service'
+    | '/service/create'
+    | '/user'
+    | '/user/edit'
+    | '/service/edit/$serviceId'
+    | '/service/$serviceId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/service'
+    | '/service/create'
+    | '/user'
+    | '/user/edit'
+    | '/service/edit/$serviceId'
+    | '/service/$serviceId'
+  id:
+    | '__root__'
+    | '/'
+    | '/(protected)/_layout'
+    | '/(public)/_layout'
+    | '/(public)/_layout/login'
+    | '/(protected)/_layout/dashboard/_layout'
+    | '/(protected)/_layout/service/_layout'
+    | '/(protected)/_layout/service/create'
+    | '/(protected)/_layout/user/_layout'
+    | '/(protected)/_layout/user/edit'
+    | '/(protected)/_layout/service/edit/$serviceId'
+    | '/(protected)/_layout/service/_layout/$serviceId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  protectedLayoutRoute: typeof protectedLayoutRouteWithChildren
+  publicLayoutRoute: typeof publicLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +170,134 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(public)/_layout': {
+      id: '/(public)/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof publicLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(protected)/_layout': {
+      id: '/(protected)/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof protectedLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/_layout/login': {
+      id: '/(public)/_layout/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof publicLayoutLoginRouteImport
+      parentRoute: typeof publicLayoutRoute
+    }
+    '/(protected)/_layout/user/edit': {
+      id: '/(protected)/_layout/user/edit'
+      path: '/user/edit'
+      fullPath: '/user/edit'
+      preLoaderRoute: typeof protectedLayoutUserEditRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
+    '/(protected)/_layout/user/_layout': {
+      id: '/(protected)/_layout/user/_layout'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof protectedLayoutUserLayoutRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
+    '/(protected)/_layout/service/create': {
+      id: '/(protected)/_layout/service/create'
+      path: '/service/create'
+      fullPath: '/service/create'
+      preLoaderRoute: typeof protectedLayoutServiceCreateRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
+    '/(protected)/_layout/service/_layout': {
+      id: '/(protected)/_layout/service/_layout'
+      path: '/service'
+      fullPath: '/service'
+      preLoaderRoute: typeof protectedLayoutServiceLayoutRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
+    '/(protected)/_layout/dashboard/_layout': {
+      id: '/(protected)/_layout/dashboard/_layout'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof protectedLayoutDashboardLayoutRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
+    '/(protected)/_layout/service/edit/$serviceId': {
+      id: '/(protected)/_layout/service/edit/$serviceId'
+      path: '/service/edit/$serviceId'
+      fullPath: '/service/edit/$serviceId'
+      preLoaderRoute: typeof protectedLayoutServiceEditServiceIdRouteImport
+      parentRoute: typeof protectedLayoutRoute
+    }
+    '/(protected)/_layout/service/_layout/$serviceId/': {
+      id: '/(protected)/_layout/service/_layout/$serviceId/'
+      path: '/$serviceId'
+      fullPath: '/service/$serviceId/'
+      preLoaderRoute: typeof protectedLayoutServiceLayoutServiceIdIndexRouteImport
+      parentRoute: typeof protectedLayoutServiceLayoutRoute
+    }
   }
 }
 
+interface protectedLayoutServiceLayoutRouteChildren {
+  protectedLayoutServiceLayoutServiceIdIndexRoute: typeof protectedLayoutServiceLayoutServiceIdIndexRoute
+}
+
+const protectedLayoutServiceLayoutRouteChildren: protectedLayoutServiceLayoutRouteChildren =
+  {
+    protectedLayoutServiceLayoutServiceIdIndexRoute:
+      protectedLayoutServiceLayoutServiceIdIndexRoute,
+  }
+
+const protectedLayoutServiceLayoutRouteWithChildren =
+  protectedLayoutServiceLayoutRoute._addFileChildren(
+    protectedLayoutServiceLayoutRouteChildren,
+  )
+
+interface protectedLayoutRouteChildren {
+  protectedLayoutDashboardLayoutRoute: typeof protectedLayoutDashboardLayoutRoute
+  protectedLayoutServiceLayoutRoute: typeof protectedLayoutServiceLayoutRouteWithChildren
+  protectedLayoutServiceCreateRoute: typeof protectedLayoutServiceCreateRoute
+  protectedLayoutUserLayoutRoute: typeof protectedLayoutUserLayoutRoute
+  protectedLayoutUserEditRoute: typeof protectedLayoutUserEditRoute
+  protectedLayoutServiceEditServiceIdRoute: typeof protectedLayoutServiceEditServiceIdRoute
+}
+
+const protectedLayoutRouteChildren: protectedLayoutRouteChildren = {
+  protectedLayoutDashboardLayoutRoute: protectedLayoutDashboardLayoutRoute,
+  protectedLayoutServiceLayoutRoute:
+    protectedLayoutServiceLayoutRouteWithChildren,
+  protectedLayoutServiceCreateRoute: protectedLayoutServiceCreateRoute,
+  protectedLayoutUserLayoutRoute: protectedLayoutUserLayoutRoute,
+  protectedLayoutUserEditRoute: protectedLayoutUserEditRoute,
+  protectedLayoutServiceEditServiceIdRoute:
+    protectedLayoutServiceEditServiceIdRoute,
+}
+
+const protectedLayoutRouteWithChildren = protectedLayoutRoute._addFileChildren(
+  protectedLayoutRouteChildren,
+)
+
+interface publicLayoutRouteChildren {
+  publicLayoutLoginRoute: typeof publicLayoutLoginRoute
+}
+
+const publicLayoutRouteChildren: publicLayoutRouteChildren = {
+  publicLayoutLoginRoute: publicLayoutLoginRoute,
+}
+
+const publicLayoutRouteWithChildren = publicLayoutRoute._addFileChildren(
+  publicLayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  protectedLayoutRoute: protectedLayoutRouteWithChildren,
+  publicLayoutRoute: publicLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

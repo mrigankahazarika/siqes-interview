@@ -1,8 +1,3 @@
-interface Tokens {
-    access_token: string;
-}
-
-
 const getLocalAccessToken = (): string | null => {
     const token = localStorage.getItem("access_token");
     return token || null;
