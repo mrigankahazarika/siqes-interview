@@ -1,12 +1,5 @@
-import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { Sidebar } from '../../components/global/sidebar';
-
-// const user = {
-//   id : 1
-// };
-
-const user = null;
-
 
 export const Route = createFileRoute('/(protected)/_layout')({
   component: RouteComponent,
@@ -22,17 +15,6 @@ export const Route = createFileRoute('/(protected)/_layout')({
       })
     }
   },
-  // loader : ()=> {
-  //   return user;
-  // },
-  // errorComponent : ({error}) => {
-  //     const navigate = useNavigate()
-
-  //      if (!user.id) {
-  //       navigate({ to: "/login" });
-  //     return;
-  //   }
-  // },
 })
 
 function RouteComponent() {

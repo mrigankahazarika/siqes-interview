@@ -4,8 +4,10 @@ import './index.css'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 
-const router = createRouter({ routeTree,context: { auth: undefined! } })
+
+const router = createRouter({ routeTree, context: { auth: { user: null } } })
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -14,15 +16,11 @@ declare module '@tanstack/react-router' {
 }
 const queryClient = new QueryClient()
 
-// const user = null
-const user = {
-  id : 9
-}
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-       <RouterProvider router={router} context={{auth : {user}}} />
+        <Toaster />
+       <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>,
 )

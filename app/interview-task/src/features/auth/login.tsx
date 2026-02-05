@@ -1,9 +1,11 @@
 import { useForm } from '@tanstack/react-form'
 import { LoginSchema } from './schemas/login.schema'
 import { useLoginMutaion } from './hooks/useLogin';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function LoginPage() {
 
+  const navigate = useNavigate();
   const {mutate, isPending} = useLoginMutaion()
 
   const form = useForm({
@@ -16,7 +18,11 @@ export default function LoginPage() {
     },
     onSubmit: async (values) => {
       console.log(values, 'values check s');
-      mutate(values.value)
+      mutate(values.value, {
+        onSuccess: () => {
+          navigate({ to: '/' });
+        }
+      })
 
     },
   })

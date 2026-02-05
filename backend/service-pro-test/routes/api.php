@@ -6,11 +6,22 @@ use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\ServciceRequestController;
 
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
 Route::post('login' ,[AuthenController::class , 'login'])->name('login');
+
+Route::group(['middleware' => ['auth:api'], 'prefix' => 'auth'], function () {
+
+    Route::get('/test', function(Request $request){
+        return response()->json(['message' => 'check auth route']);
+    });
+    Route::get('me', [AuthenController::class , 'me']);
+    // for all the auth route set here with auth middleware
+});
+
+
 
 // to save time calligng multiple apis , i set it into one api ,
 // Route::get('service_request/statues', [ServciceRequestController::class, 'getTypesx']);

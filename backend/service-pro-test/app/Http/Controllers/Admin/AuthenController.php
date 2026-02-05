@@ -23,6 +23,12 @@ class AuthenController extends Controller
             'user' => auth()->user()
         ]);
     }
+
+    public function me()
+    {
+        
+        return response()->json(auth()->user());
+    }
     
     public function login(LoginRequest $login){
         $credentials = $login->validated();
@@ -33,19 +39,21 @@ class AuthenController extends Controller
         }
 
         return $this->respondWithToken($token);
-        return response()->json([
-            'message' => 'Authenticated'
-            ])->cookie(
-                'token',           
-                // respondWithToken($token),            
-                $token,            
-                60,                
-                '/',               
-                null,              
-                true,              
-                true,              
-                false,             
-                'Strict'           
-            );
+
+        // for laravel 12 some cors issue i am afcing , for that cookie auth wanst set . i am using lcoal storage for the token managemnt
+    //     return response()->json([
+    //         'message' => 'Authenticated'
+    //         ])->cookie(
+    //             'token',           
+    //             // respondWithToken($token),            
+    //             $token,            
+    //             60,                
+    //             '/',               
+    //             null,              
+    //             true,              
+    //             true,              
+    //             false,             
+    //             'Strict'           
+    //         );
     }   
 }
