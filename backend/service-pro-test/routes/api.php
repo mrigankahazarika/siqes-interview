@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthenController;
 use App\Http\Controllers\Admin\ServciceRequestController;
+use App\Http\Controllers\Admin\LogsController;
 
 
 // Route::get('/user', function (Request $request) {
@@ -24,7 +25,10 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'auth'], function () {
     // for all the auth route set here with auth middleware
     Route::get('service_request/types',[ServciceRequestController::class, 'getTypesx']);
     Route::apiResource('service_request', ServciceRequestController::class)->except('put');
-});
+
+    Route::get('logs', [LogsController::class, 'index']);
+
+    });
 
 
 
