@@ -61,19 +61,19 @@ it will run on url http://127.0.0.1:8000 make sure the react env also has this l
 ------------------------ROutes list------------------
 
 
-  GET|HEAD        /
-  GET|HEAD        api/auth/logs -> Admin\LogsController@index
-  GET|HEAD        api/auth/me -› Admin\AuthenController@me
-  PATCH           api/auth/me -› Admin\AuthenController@updateProfile
-  GET|HEAD        api/auth/service_request  -› Admin\ServciceRequestController@index
-  POST            api/auth/service_request -› Admin\ServciceRequestController@store
-  GET|HEAD        api/auth/service_request/types -› Admin\ServciceRequestController@getTypesx
-  GET|HEAD        api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@show
-  PUT|PATCH       api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@update
-  DELETE          api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@destroy
-  GET|HEAD        api/auth/test 
-  POST            api/login  -> login › Admin\AuthenController@login
-  GET|HEAD        storage/{path} ................................. storage.local
-  GET|HEAD        up ....................................................... generated::Gjh2LV2Ylpr282ke
+  GET|HEAD        / <br>
+  GET|HEAD        api/auth/logs -> Admin\LogsController@index <br>
+  GET|HEAD        api/auth/me -› Admin\AuthenController@me <br>
+  PATCH           api/auth/me -› Admin\AuthenController@updateProfile <br>
+  GET|HEAD        api/auth/service_request  -› Admin\ServciceRequestController@index <br>
+  POST            api/auth/service_request -› Admin\ServciceRequestController@store <br>
+  GET|HEAD        api/auth/service_request/types -› Admin\ServciceRequestController@getTypesx <br>
+  GET|HEAD        api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@show <br>
+  PUT|PATCH       api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@update <br>
+  DELETE          api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@destroy <br>
+  GET|HEAD        api/auth/test <br>
+  POST            api/login  -> login › Admin\AuthenController@login <br>
+  GET|HEAD        storage/{path} ................................. storage.local <br>
+  GET|HEAD        up ....................................................... generated::Gjh2LV2Ylpr282ke <br>
 
                      
