@@ -7,6 +7,8 @@ As no component library like mui or shadcn was used , the ui looks dull.
 i didnt focused on styling or ux to save time .
 the core functionality is working fine .
 
+I can EVen share a new ui design for it if i use a component lirbary like shadcn or mui . i will make the design look better with it
+
 
 
 admin panel path admin/interview-task
