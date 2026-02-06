@@ -61,20 +61,19 @@ it will run on url http://127.0.0.1:8000 make sure the react env also has this l
 ------------------------ROutes list------------------
 
 
-  GET|HEAD        / ....................................................................................................................... generated::Q21JS1QOFkVH4zV3
-  GET|HEAD        api/auth/logs .............................................................................. generated::Z7JmYsYDd0UuhHUv › Admin\LogsController@index
-  GET|HEAD        api/auth/me ................................................................................. generated::H1uxyFNkiHyQNFkD › Admin\AuthenController@me
-  PATCH           api/auth/me ...................................................................... generated::DFhoaJMn14flppf2 › Admin\AuthenController@updateProfile
-  GET|HEAD        api/auth/service_request .............................................................. service_request.index › Admin\ServciceRequestController@index
-  POST            api/auth/service_request .............................................................. service_request.store › Admin\ServciceRequestController@store
-  GET|HEAD        api/auth/service_request/types .............................................. generated::utE1Mnv32XpqJeNO › Admin\ServciceRequestController@getTypesx
-  GET|HEAD        api/auth/service_request/{service_request} .............................................. service_request.show › Admin\ServciceRequestController@show
-  PUT|PATCH       api/auth/service_request/{service_request} .......................................... service_request.update › Admin\ServciceRequestController@update
-  DELETE          api/auth/service_request/{service_request} ........................................ service_request.destroy › Admin\ServciceRequestController@destroy
-  GET|HEAD        api/auth/test ........................................................................................................... generated::x5Cl0Col9qcs6640
-  POST            api/login ...................................................................................................... login › Admin\AuthenController@login
-  GET|HEAD        sanctum/csrf-cookie ............................................................... sanctum.csrf-cookie › Laravel\Sanctum › CsrfCookieController@show
-  GET|HEAD        storage/{path} ........................................................................................................................ storage.local
-  GET|HEAD        up ...................................................................................................................... generated::Gjh2LV2Ylpr282ke
+  GET|HEAD        /
+  GET|HEAD        api/auth/logs -> Admin\LogsController@index
+  GET|HEAD        api/auth/me -› Admin\AuthenController@me
+  PATCH           api/auth/me -› Admin\AuthenController@updateProfile
+  GET|HEAD        api/auth/service_request  -› Admin\ServciceRequestController@index
+  POST            api/auth/service_request -› Admin\ServciceRequestController@store
+  GET|HEAD        api/auth/service_request/types -› Admin\ServciceRequestController@getTypesx
+  GET|HEAD        api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@show
+  PUT|PATCH       api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@update
+  DELETE          api/auth/service_request/{service_request}   -› Admin\ServciceRequestController@destroy
+  GET|HEAD        api/auth/test 
+  POST            api/login  -> login › Admin\AuthenController@login
+  GET|HEAD        storage/{path} ................................. storage.local
+  GET|HEAD        up ....................................................... generated::Gjh2LV2Ylpr282ke
 
                      
